@@ -1,0 +1,571 @@
+/* 1. VARIABLES - Change colors here easily */
+:root {
+    --bg-color: #0a0a0a;
+    --card-bg: #161616;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --accent: #00e5ff; /* Cyan Neon */
+    --accent-hover: #00b8cc;
+    --font-main: 'Inter', sans-serif;
+    --font-code: 'JetBrains Mono', monospace;
+}
+
+/* 2. GLOBAL RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* 3. NAVIGATION */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: rgba(10, 10, 10, 0.95);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.highlight { color: var(--accent); }
+
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { 
+    font-size: 0.9rem; 
+    font-weight: 500; 
+    opacity: 0.7; 
+}
+.nav-links a:hover, .nav-links a.active { 
+    opacity: 1; 
+    color: var(--accent); 
+}
+
+/* Mobile Menu Hidden by default on Desktop */
+.hamburger { display: none; cursor: pointer; }
+.hamburger .line {
+    width: 25px; height: 3px; background: white; margin: 5px; transition: 0.3s;
+}
+
+/* 4. HERO SECTION */
+header {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%);
+}
+
+.tagline {
+    font-family: var(--font-code);
+    color: var(--accent);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+
+.intro-text {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Buttons */
+.cta-group { display: flex; gap: 20px; justify-content: center; }
+
+.btn {
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.primary { background: var(--accent); color: #000; }
+.primary:hover { background: var(--accent-hover); }
+
+.secondary { border-color: var(--text-muted); }
+.secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* 5. SECTIONS & GRID */
+.section-padding { padding: 80px 5%; }
+.section-header { margin-bottom: 60px; }
+.section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.card h3 {
+    font-family: var(--font-code);
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.card p { color: var(--text-muted); margin-bottom: 25px; }
+
+.read-more {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* 6. FOOTER */
+footer {
+    padding: 80px 5%;
+    border-top: 1px solid #333;
+    text-align: center;
+}
+.socials { margin: 20px 0; display: flex; justify-content: center; gap: 20px; }
+.copyright { font-size: 0.8rem; color: #555; }
+
+/* 7. MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    
+    .hamburger { display: block; }
+    
+    .nav-links {
+        position: absolute;
+        right: 0px;
+        top: 70px;
+        background: var(--card-bg);
+        flex-direction: column;
+        width: 50%;
+        height: 100vh;
+        align-items: center;
+        padding-top: 50px;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in;
+    }
+    
+    .nav-links.open { transform: translateX(0%); }
+    .cta-group { flex-direction: column; }
+} 
+/* --- START OF DETAILED PAGE STYLES --- */
+
+/* Layout for content pages: Sidebar + Article */
+.page-layout {
+    display: flex;
+    max-width: 1200px;
+    margin: 80px auto 0; /* 80px top margin to clear navbar */
+    padding: 20px;
+    gap: 40px;
+}
+
+/* 1. The Sidebar (Table of Contents) */
+.sidebar {
+    width: 250px;
+    position: sticky;
+    top: 100px; /* Stays fixed while scrolling */
+    height: fit-content;
+    border-right: 1px solid #333;
+    padding-right: 20px;
+}
+
+.sidebar h4 {
+    color: var(--accent);
+    margin-bottom: 15px;
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.sidebar ul li { margin-bottom: 10px; }
+.sidebar a { color: var(--text-muted); font-size: 0.9rem; }
+.sidebar a:hover { color: var(--text-main); padding-left: 5px; }
+
+/* 2. The Main Article Area */
+.article-content {
+    flex: 1; /* Takes up remaining space */
+    max-width: 800px; /* Optimal reading width */
+}
+
+.article-header {
+    margin-bottom: 40px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+}
+
+.article-meta {
+    font-family: var(--font-code);
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* 3. Typography for Long Reading */
+.article-body p {
+    margin-bottom: 20px;
+    font-size: 1.1rem; /* Slightly larger for reading */
+    line-height: 1.8;
+    color: #ccc;
+}
+
+.article-body h2 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: white;
+}
+
+.article-body h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #eee;
+}
+
+/* 4. Special Elements (Code blocks, Quotes) */
+blockquote {
+    border-left: 4px solid var(--accent);
+    padding-left: 20px;
+    margin: 30px 0;
+    font-style: italic;
+    color: white;
+    background: #111;
+    padding: 20px;
+    border-radius: 0 5px 5px 0;
+}
+
+pre {
+    background: #111;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto; /* Scroll if code is too long */
+    margin-bottom: 30px;
+    border: 1px solid #333;
+}
+
+code {
+    font-family: var(--font-code);
+    color: var(--accent);
+}
+
+/* Mobile Fixes for Content Pages */
+@media (max-width: 768px) {
+    .page-layout { flex-direction: column; }
+    .sidebar { 
+        position: relative; 
+        width: 100%; 
+        border-right: none; 
+        border-bottom: 1px solid #333;
+        padding-bottom: 20px;
+        top: 0;
+    }
+}
+/* --- 8. DETAILED READING STYLES (UPDATED) --- */
+
+/* The Layout */
+.page-layout {
+    display: flex;
+    max-width: 1000px; /* Controlled width for readability */
+    margin: 0 auto;
+    gap: 50px;
+}
+
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    border-right: 1px solid #333;
+    display: none; /* Hidden on mobile by default, clearer reading */
+}
+
+@media(min-width: 768px) {
+    .sidebar { display: block; }
+}
+
+/* The Headings (BLUE & SPECIAL FONT) */
+.article-content h3 {
+    color: var(--accent); /* The Neon Blue */
+    font-family: var(--font-code); /* The Tech Font */
+    font-size: 1.4rem;
+    margin-top: 60px; /* Big breathing room */
+    margin-bottom: 25px;
+    border-top: 1px solid #333; /* Divider line */
+    padding-top: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* The very first heading shouldn't have a line above it */
+.article-content h3:first-of-type {
+    border-top: none;
+    margin-top: 40px;
+    padding-top: 0;
+}
+
+/* Sub-sub headings (like specific skills) */
+.article-content h4 {
+    color: white;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* The Body Text */
+.article-body, .article-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #d4d4d4; /* Light grey for readability */
+    margin-bottom: 20px;
+}
+
+/* Lists */
+.article-content ul {
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.article-content li {
+    margin-bottom: 10px;
+    list-style-type: square;
+    color: #e0e0e0;
+}
+/* --- 9. PROJECT GRID & MODALS --- */
+
+/* The Grid on the Homepage */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.project-card {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 30px;
+    transition: 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+/* Styles for the real project images */
+.project-img {
+    width: 100%; /* Full width of the card */
+    height: 200px; /* Fixed height for consistency across all cards */
+    object-fit: cover; /* Ensures the image fills the box without stretching distorted */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+}
+
+.project-card h3 {
+    color: white;
+    font-family: var(--font-code);
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.project-card .role {
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.view-btn {
+    margin-top: 15px;
+    display: inline-block;
+    color: white;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+}
+
+/* --- THE FULL SCREEN MODAL (Hidden Details) --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.95); /* Dark overlay */
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #0a0a0a;
+    margin: 5% auto;
+    padding: 40px;
+    border: 1px solid #333;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 229, 255, 0.1);
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover { color: var(--accent); }
+
+/* Modal Typography */
+.modal-content h2 { color: var(--accent); font-family: var(--font-code); margin-bottom: 10px; }
+.modal-content .modal-role { color: white; font-size: 1rem; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #333; display: block;}
+.modal-content ul { margin-left: 20px; color: #ccc; line-height: 1.8; }
+.modal-content li { margin-bottom: 10px; list-style: square; }
+/* --- 10. CONTACT / WORK WITH ME SECTION --- */
+#contact {
+    text-align: center;
+    padding: 100px 20px;
+    background: #050505;
+    border-top: 1px solid #222;
+}
+
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Space between icons */
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    color: #888;
+    font-size: 2rem; /* Size of the icons */
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-link:hover {
+    color: var(--accent); /* Neon Blue on hover */
+    transform: translateY(-5px);
+}
+
+/* Specific color tweaks if you want them */
+.fa-instagram:hover { color: #E1306C; }
+.fa-linkedin:hover { color: #0077b5; }
+.fa-telegram:hover { color: #0088cc; }
+
+/* SVG styling for Base App */
+.base-icon {
+    width: 30px;
+    height: 30px;
+    fill: #888;
+    transition: 0.3s;
+}
+.social-link:hover .base-icon {
+    fill: #0052FF; /* Base Blue */
+}
+/* Specific hover color for Base App */
+.social-link.base-link:hover { 
+    color: #0052FF; /* Official Base Blue */
+}
+
+/* Ensure the SVG size matches the FontAwesome icons */
+.base-icon {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+    margin-bottom: -5px; /* Aligns it perfectly with the other icons */
+}
+/* --- 11. PROFILE IMAGE & ANIMATIONS --- */
+
+/* 1. The Circular Profile Image */
+.profile-wrapper {
+    margin-bottom: 25px;
+    display: inline-block;
+    position: relative;
+}
+
+.profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;       /* Makes it round */
+    object-fit: cover;        /* Prevents stretching */
+    border: 3px solid var(--accent); /* Neon Blue Border */
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); /* Soft Glow */
+}
+
+/* 2. The Zoom-In Animation Classes */
+.hidden-zoom {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px); /* Starts small and slightly down */
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth 'pop' effect */
+    filter: blur(5px); /* Starts slightly blurry */
+}
+
+.show-zoom {
+    opacity: 1;
+    transform: scale(1) translateY(0); /* Zooms to normal size */
+    filter: blur(0);
+}
+
+/* Apply animation to Project Cards too */
+.project-card {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s ease-out;
+}
+
+.project-card.show-zoom {
+    opacity: 1;
+    transform: scale(1);
+}
